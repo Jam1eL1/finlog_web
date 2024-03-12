@@ -37,13 +37,15 @@
         </section>
         <section>
             <h1>Recent Posts</h1>
+            {% for entry in entries %}
             <article class="entry">
                 <div>
-                    <h2 class="entry__title">Entry title</h2>
-                    <time class="entry__date" datetime="02-03-2024">Mar 2</time>
-                    <p class="entry__content">Entry 1</p>
+                    <h2 class="entry__title">{{ entry[0] | truncate(30, true)}}</h2>
+                    <time class="entry__date" datetime="{{ entry[1] }}">{{ entry[2] }}</time>
+                    <p class="entry__content">{{ entry[0]}}</p>
                 </div>
             </article>
+            {% endfor %}
         </section>
     </main>
     <footer class="footer">
