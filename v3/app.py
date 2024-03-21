@@ -1,13 +1,18 @@
 import datetime
+import os
 from flask import Flask, render_template, request
 from pymongo import MongoClient
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
 # set up client (represents the cluster you set up)
-    client = MongoClient('mongodb+srv://test_user:LtcatrLRt7RCJY4N@cluster0.ckfhg1z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+    client = MongoClient(os.getenv("MONGODB_URI"))
     # set up db
     app.db = client.finlog
+    # finlog is set up as database on mongodb project
 # dbs = client.list_database_names() to see dbs existing inside the cluster
     entries = []
 
@@ -31,8 +36,5 @@ def create_app():
         ]
         
         return render_template("home.html", entries = entries_with_date)
-        
-    # if __name__ == "__main__":
-    #     # if receiving user data
-    #     app.run(debug=True)
+
     return app
