@@ -10,13 +10,14 @@ load_dotenv()
 def create_app():
     app = Flask(__name__)
     mongodb_uri = os.getenv("MONGODB_URI")
-# set up client (represents the cluster you set up)
+    # set up client (represents the cluster you set up)
     client = MongoClient(mongodb_uri)
     # set up db
     app.db = client.finlog
     # finlog is set up as database on mongodb project
-# dbs = client.list_database_names() to see dbs existing inside the cluster
+    # dbs = client.list_database_names() to see dbs existing inside the cluster
     # 'entries' is collection name from finlog database
+    
     @app.route("/", methods=["GET", "POST"])
     def home():
         if request.method == "POST":
@@ -56,9 +57,5 @@ def create_app():
     @app.errorhandler(404)
     def page_not_found(error):
         return render_template('404.html'), 404
-    return app
     
-
-if __name__ == "__main__":
-    app = create_app()
-    app.run(debug=True)
+    return app
